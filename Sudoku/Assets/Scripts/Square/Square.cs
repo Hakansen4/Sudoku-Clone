@@ -32,7 +32,6 @@ public class Square : Selectable
     {
         _Number = number;
         created = true;
-        _Text.text = _Number.ToString();
     }
     public bool IsCreated()
     {
@@ -41,5 +40,17 @@ public class Square : Selectable
     public void ResetCreated()
     {
         created = false;
+    }
+    public void SetAsStarter()
+    {
+        interactable = false;
+        _Text.gameObject.SetActive(true);
+        _Text.text = _Number.ToString();
+        _Text.color = Color.black;
+        isSolved = true;
+    }
+    public bool CheckSolved()
+    {
+        return isSolved;
     }
 }

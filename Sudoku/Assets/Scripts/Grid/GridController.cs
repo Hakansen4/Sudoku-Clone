@@ -9,8 +9,9 @@ public class GridController : MonoBehaviour
     [SerializeField] private int _RowAndColumnRange;
     private int _BoxesWidth;
     int _CreateRepetitions = 0;
+    bool _Created;
     private Square[,] _AllSquares;
-    private Vector2 _StartingPosition = new Vector2(-470, -280);
+    private Vector2 _StartingPosition = new Vector2(-455, -300);//-470,-280
     private void Press(int x)
     {
         Debug.Log(x);
@@ -38,6 +39,22 @@ public class GridController : MonoBehaviour
     private void Update()
     {
         FillSquares();
+        if (!_Created && CheckCreatFinished())
+            StartTheGame();
+
+    }
+    private void StartTheGame()
+    {
+        for (int i = 0; i < 40; i++)
+        {
+            int _Number1 = (int)Random.RandomRange(0, 9);
+            int _Number2 = (int)Random.RandomRange(0, 9);
+            if (!_AllSquares[_Number1, _Number2].CheckSolved())
+                _AllSquares[_Number1, _Number2].SetAsStarter();
+            else
+                i--;
+        }
+        _Created = true;
     }
     private void FillSquares()
     {

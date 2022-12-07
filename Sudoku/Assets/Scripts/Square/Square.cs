@@ -6,15 +6,43 @@ using TMPro;
 
 public class Square : Selectable
 {
-    [HideInInspector] public int _Rank;
+    private int _Row, _Collumn;
     [SerializeField] private TextMeshProUGUI _Text;
+    [SerializeField] private Color32 _FailedTextColor;
+    [SerializeField] private Color32 _CorrectTextColor;
     private int _Number = 0;
     private bool isSolved;
     private bool created;
     private void Update()
     {
         if (IsPressed())
-            GameActions.instance._PressedAction.Invoke(_Rank);
+        {
+            GameActions.instance._PressedAction?.Invoke(_Row, _Collumn);
+            targetGraphic.color = colors.selectedColor;
+        }
+    }
+    public void Play(int Number)
+    {
+        _Text.gameObject.SetActive(true);
+        _Text.text = Number.ToString();
+        if (Number == _Number)
+        {
+            isSolved = true;
+            //_Text.color = Color.cyan;
+            _Text.color = _CorrectTextColor;
+        }
+        else
+        {
+            GameActions.instance._MadeMistake?.Invoke();
+            isSolved = false;
+            //_Text.color = Color.red;
+            _Text.color = _FailedTextColor;
+        }
+    }
+    public void SetPosition(int Row,int Collumn)
+    {
+        _Row = Row;
+        _Collumn = Collumn;
     }
     public void HighlightSquare()
     {
@@ -52,5 +80,11 @@ public class Square : Selectable
     public bool CheckSolved()
     {
         return isSolved;
+    }
+    public void GiveHint()
+    {
+        _Text.gameObject.SetActive(true);
+        _Text.text = _Number.ToString();
+        isSolved = true;
     }
 }

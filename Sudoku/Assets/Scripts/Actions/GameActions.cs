@@ -7,7 +7,14 @@ public class GameActions : MonoBehaviour
 {
     public static GameActions instance { get; private set; }
 
-    public UnityAction<int> _PressedAction;
+    public UnityAction<int,int> _PressedAction;
+    public UnityAction<int> _Play;
+    public UnityAction _GameCompleted;
+    public UnityAction _LoadFinished;
+    public UnityAction _MadeMistake;
+    public UnityAction _Hinted;
+    public UnityAction _HintFailed;
+    public UnityAction _HintOver;
     
     private void Awake()
     {

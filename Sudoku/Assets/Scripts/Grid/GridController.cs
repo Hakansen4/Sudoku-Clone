@@ -72,6 +72,7 @@ public class GridController : MonoBehaviour
         GameActions.instance._PressedAction += Press;
         GameActions.instance._Play += PlayTheGame;
         GameActions.instance._Hinted += GiveHint;
+        GameActions.instance._Erase += EraseSquare;
         CreateGrid();
         FillIndependentBoxes();
     }
@@ -80,6 +81,7 @@ public class GridController : MonoBehaviour
         GameActions.instance._PressedAction -= Press;
         GameActions.instance._Play -= PlayTheGame;
         GameActions.instance._Hinted -= GiveHint;
+        GameActions.instance._Erase -= EraseSquare;
     }
     private void PlayTheGame(int _PressedNumber)
     {
@@ -92,6 +94,11 @@ public class GridController : MonoBehaviour
             StartTheGame();
         if (CheckGridCompleted())
             GameActions.instance._GameCompleted?.Invoke();
+    }
+    private void EraseSquare()
+    {
+        if (_PickedSquare != null)
+            _PickedSquare.EraseNumber();
     }
     private void GiveHint()
     {
@@ -125,7 +132,7 @@ public class GridController : MonoBehaviour
             }
         }
         _CreateRepetitions++;
-        if (_CreateRepetitions > 200    &&  !CheckGrid())
+        if (_CreateRepetitions > 1000    &&  !CheckGrid())
         {
             ResetGrid();
             _CreateRepetitions = 0;

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int MaxMistake;
     [SerializeField] private TextMeshProUGUI _MistakesText;
     [SerializeField] private TextMeshProUGUI _TimerText;
+    [SerializeField] private TextMeshProUGUI _HintText;
     [SerializeField] private GameObject _LevelFailedScreen;
     [SerializeField] private GameObject _LevelCompletedScreen;
     private bool _StartTimer;
@@ -41,7 +42,8 @@ public class GameManager : MonoBehaviour
     private void Init()
     {
         _MistakeCount = 0;
-        _HintCount = 0;
+        _HintCount = 3;
+        ShowHintCount();
         _MistakesText.text = _MistakeCount.ToString() + " / " + MaxMistake.ToString();
     }
     private void Update()
@@ -54,12 +56,14 @@ public class GameManager : MonoBehaviour
     }
     private void FailedHint()
     {
-        _HintCount--;
+        _HintCount++;
+        ShowHintCount();
     }
     private void CheckHint()
     {
-        _HintCount++;
-        if (_HintCount == MaxHint)
+        _HintCount--;
+        ShowHintCount();
+        if (_HintCount == 0)
             GameActions.instance._HintOver?.Invoke();
     }
     private void StartTimer()
@@ -81,5 +85,9 @@ public class GameManager : MonoBehaviour
     private void CompleteGame()
     {
         _LevelCompletedScreen.SetActive(true);
+    }
+    private void ShowHintCount()
+    {
+        _HintText.text = _HintCount.ToString() + " / " + MaxHint.ToString();
     }
 }

@@ -18,6 +18,7 @@ public class GameplayButtonsInteraction : MonoBehaviour
     [SerializeField] private Button _PlayButton8;
     [SerializeField] private Button _PlayButton9;
     [SerializeField] private Button _Hint;
+    [SerializeField] private Button _Erase;
     [Header("Level Pass Buttons")]
     [SerializeField] private Button _FailedRetry;
     [SerializeField] private Button _FailedMenu;
@@ -45,6 +46,7 @@ public class GameplayButtonsInteraction : MonoBehaviour
         _FailedMenu.onClick.AddListener(ReturnMenu);
         _CompletedMenu.onClick.AddListener(ReturnMenu);
         _Hint.onClick.AddListener(GetHint);
+        _Erase.onClick.AddListener(Erase);
     }
     private void OnDisable()
     {
@@ -66,6 +68,11 @@ public class GameplayButtonsInteraction : MonoBehaviour
         _FailedMenu.onClick.RemoveListener(ReturnMenu);
         _CompletedMenu.onClick.RemoveListener(ReturnMenu);
         _Hint.onClick.RemoveListener(GetHint);
+        _Erase.onClick.RemoveListener(Erase);
+    }
+    private void Erase()
+    {
+        GameActions.instance._Erase?.Invoke();
     }
     private void DeactiveHint()
     {

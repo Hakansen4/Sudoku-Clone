@@ -15,6 +15,7 @@ public class GameActions : MonoBehaviour
     public UnityAction _Hinted;
     public UnityAction _HintFailed;
     public UnityAction _HintOver;
+    public UnityAction _Erase;
     
     private void Awake()
     {

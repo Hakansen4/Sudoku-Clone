@@ -87,4 +87,10 @@ public class Square : Selectable
         _Text.text = _Number.ToString();
         isSolved = true;
     }
+    public void EraseNumber()
+    {
+        isSolved = false;
+        _Text.text = "";
+        _Text.gameObject.SetActive(false);
+    }
 }

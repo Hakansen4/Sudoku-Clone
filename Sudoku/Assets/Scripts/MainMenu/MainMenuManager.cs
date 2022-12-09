@@ -8,15 +8,18 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private Animator _LoadingAnim;
     [SerializeField] private Animator _DifficultyPanel;
-    [SerializeField] private Button _NewGame;
+    [SerializeField] private Button _ClassicSudoku;
+    [SerializeField] private Button _RotaterSudoku;
     [SerializeField] private Button _SuperEasy;
     [SerializeField] private Button _Easy;
     [SerializeField] private Button _Medium;
     [SerializeField] private Button _Hard;
     [SerializeField] private Button _Back;
+    private GameType _Type;
     private void OnEnable()
     {
-        _NewGame.onClick.AddListener(NewGame);
+        _ClassicSudoku.onClick.AddListener(PlayClassicSudoku);
+        _RotaterSudoku.onClick.AddListener(PlayRotaterSudoku);
         _SuperEasy.onClick.AddListener(SuperEasyGame);
         _Easy.onClick.AddListener(EasyGame);
         _Medium.onClick.AddListener(MediumGame);
@@ -25,16 +28,22 @@ public class MainMenuManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        _NewGame.onClick.RemoveListener(NewGame);
+        _ClassicSudoku.onClick.RemoveListener(PlayClassicSudoku);
+        _RotaterSudoku.onClick.RemoveListener(PlayRotaterSudoku);
         _SuperEasy.onClick.RemoveListener(SuperEasyGame);
         _Easy.onClick.RemoveListener(EasyGame);
         _Medium.onClick.RemoveListener(MediumGame);
         _Hard.onClick.RemoveListener(HardGame);
         _Back.onClick.RemoveListener(GoBack);
     }
-
-    private void NewGame()
+    private void PlayRotaterSudoku()
     {
+        _Type = GameType.Rotater;
+        _DifficultyPanel.SetTrigger("Open");
+    }
+    private void PlayClassicSudoku()
+    {
+        _Type = GameType.Classic;
         _DifficultyPanel.SetTrigger("Open");
     }
     private IEnumerator LoadGameplay()
@@ -42,7 +51,17 @@ public class MainMenuManager : MonoBehaviour
         _LoadingAnim.gameObject.SetActive(true);
         _LoadingAnim.SetTrigger("Open");
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Gameplay");
+        switch (_Type)
+        {
+            case GameType.Classic:
+                SceneManager.LoadScene("ClassicGameplay");
+                break;
+            case GameType.Rotater:
+                SceneManager.LoadScene("RotaterGameplay");
+                break;
+            default:
+                break;
+        }
     }
     private void SuperEasyGame()
     {

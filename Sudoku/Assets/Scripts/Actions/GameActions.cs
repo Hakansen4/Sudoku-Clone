@@ -16,7 +16,8 @@ public class GameActions : MonoBehaviour
     public UnityAction _HintFailed;
     public UnityAction _HintOver;
     public UnityAction _Erase;
-    
+    public UnityAction _RotateGridUp;
+    public UnityAction _RotateGridDown;
     private void Awake()
     {
         if (instance != null && instance != this)

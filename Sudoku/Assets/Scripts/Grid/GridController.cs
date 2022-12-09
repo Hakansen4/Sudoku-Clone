@@ -5,15 +5,15 @@ using UnityEngine;
 public class GridController : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _Square;
-    [SerializeField] private float _GridDistance;
-    [SerializeField] private int _RowAndColumnRange;
+    [SerializeField] protected GameObject _Square;
+    [SerializeField] protected float _GridDistance;
+    [SerializeField] protected int _RowAndColumnRange;
     private Square _PickedSquare;
     private int _BoxesWidth;
     int _CreateRepetitions = 0;
     bool _Created;
-    private Square[,] _AllSquares;
-    private Vector2 _StartingPosition = new Vector2(-455, -300);//-470,-280
+    protected Square[,] _AllSquares;
+    protected Vector2 _StartingPosition = new Vector2(-455, -300);//-470,-280
     #region PaintBoxes
     private void Press(int _Row,int _Collumn)
     {
@@ -67,7 +67,7 @@ public class GridController : MonoBehaviour
         _AllSquares = new Square[_RowAndColumnRange, _RowAndColumnRange];
         _BoxesWidth = (int)Mathf.Sqrt(_RowAndColumnRange);
     }
-    private void Start()
+    private void OnEnable()
     {
         GameActions.instance._PressedAction += Press;
         GameActions.instance._Play += PlayTheGame;
@@ -132,7 +132,7 @@ public class GridController : MonoBehaviour
             }
         }
         _CreateRepetitions++;
-        if (_CreateRepetitions > 1000    &&  !CheckGrid())
+        if (_CreateRepetitions > 500    &&  !CheckGrid())
         {
             ResetGrid();
             _CreateRepetitions = 0;
@@ -162,7 +162,7 @@ public class GridController : MonoBehaviour
         }
         return true;
     }
-    private void CreateGrid()
+    protected virtual void CreateGrid()
     {
         GameObject _NewSquare;
         Vector2 _InstantiatePosition = _StartingPosition;
